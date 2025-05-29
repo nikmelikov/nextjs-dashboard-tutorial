@@ -3,8 +3,9 @@ import bcrypt from "bcryptjs"
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { z } from "zod"
-import { sql } from "./app/lib/data"
+
 import { authConfig } from "./auth.config"
+import { sql } from "../data"
 
 async function getUser(email: string): Promise<User | undefined> {
   try {

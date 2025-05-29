@@ -1,10 +1,10 @@
 "use server"
 
-import { signIn } from "@/auth"
 import { AuthError } from "next-auth"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
+import { signIn } from "./auth/auth"
 import { sql } from "./data"
 
 export type State = {
@@ -90,8 +90,8 @@ export async function updateInvoice(
       SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
       WHERE id = ${id}
     `
-  } catch (error) {
-    return { message: "Database Error: Failed to Update Invoice." }
+  } catch (e) {
+    return { message: `Database Error: Failed to Update Invoice. ${e}` }
   }
 
   revalidatePath("/dashboard/invoices")
